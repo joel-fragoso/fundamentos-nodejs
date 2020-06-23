@@ -27,13 +27,13 @@ class TransactionsRepository {
       .map((transaction: Transaction) =>
         transaction.type === 'income' ? transaction.value : 0,
       )
-      .reduce((previousValue, currentValue) => previousValue + currentValue);
+      .reduce((previousValue, currentValue) => previousValue + currentValue, 0);
 
     const outcomeTotal = this.transactions
       .map((transaction: Transaction) =>
         transaction.type === 'outcome' ? transaction.value : 0,
       )
-      .reduce((previousValue, currentValue) => previousValue + currentValue);
+      .reduce((previousValue, currentValue) => previousValue + currentValue, 0);
 
     const balance: Balance = {
       income: incomeTotal,
