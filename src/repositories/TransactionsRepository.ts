@@ -18,13 +18,31 @@ class TransactionsRepository {
     this.transactions = [];
   }
 
-  // public all(): Transaction[] {
-  //   // TODO
-  // }
+  public all(): Transaction[] {
+    return this.transactions;
+  }
 
-  // public getBalance(): Balance {
-  //   // TODO
-  // }
+  public getBalance(): Balance {
+    const incomeTotal = this.transactions
+      .map((transaction: Transaction) =>
+        transaction.type === 'income' ? transaction.value : 0,
+      )
+      .reduce((previousValue, currentValue) => previousValue + currentValue);
+
+    const outcomeTotal = this.transactions
+      .map((transaction: Transaction) =>
+        transaction.type === 'outcome' ? transaction.value : 0,
+      )
+      .reduce((previousValue, currentValue) => previousValue + currentValue);
+
+    const balance: Balance = {
+      income: incomeTotal,
+      outcome: outcomeTotal,
+      total: incomeTotal - outcomeTotal,
+    };
+
+    return balance;
+  }
 
   public create({ title, value, type }: Request): Transaction {
     const transaction = new Transaction({ title, value, type });
